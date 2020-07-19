@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "javaType": "com.kaka.group.domain.Purchase",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "cardNumber": {
+      "type": "string"
+    },
+    "itemPurchased": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "employeeId": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "price": {
+      "javaType": "java.math.BigDecimal",
+      "type": "object"
+    },
+    "purchaseDate": {
+      "javaType": "java.time.LocalDate",
+      "type": "object"
+    },
+    "zipCode": {
+      "type": "integer"
+    },
+    "storeId": {
+      "type": "integer"
+    }
+  }
+}
+

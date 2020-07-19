@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "javaType": "com.kaka.group.domain.PurchasePattern",
+  "properties": {
+    "zipCode": {
+      "type": "string"
+    },
+    "item": {
+      "type": "string"
+    },
+    "date": {
+      "javaType": "java.time.LocalDate",
+      "type": "object"
+    },
+    "amount": {
+      "javaType": "java.math.BigDecimal",
+      "type": "object"
+    }
+  }
+}
+

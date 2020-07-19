@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "javaType": "com.kaka.group.domain.RewardAccumulator",
+  "properties": {
+    "customerId": {
+      "type": "string"
+    },
+    "totalRewardPoints": {
+      "type": "integer"
+    },
+    "currentRewardPoints": {
+      "type": "integer"
+    },
+    "daysFromLastPurchase": {
+      "type": "integer"
+    },
+    "purchaseTotal": {
+      "javaType": "java.math.BigDecimal",
+      "type": "object"
+    }
+  }
+}
+
