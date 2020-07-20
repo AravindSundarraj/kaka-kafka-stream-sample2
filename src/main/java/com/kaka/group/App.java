@@ -11,20 +11,19 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Printed;
-import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Properties;
 
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static java.time.temporal.ChronoField.INSTANT_SECONDS;
+
 
 @Slf4j
-public class App 
-{
-    public static void main( String[] args ) throws InterruptedException {
+public class App {
+    public static void main(String[] args) throws InterruptedException {
         log.info("Start the App for ETL");
         Properties prop = new Properties();
         prop.put(StreamsConfig.APPLICATION_ID_CONFIG, "sample_app_2");
@@ -37,34 +36,52 @@ public class App
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
 
-        KStream<String,Purchase> purchaseKStream = streamsBuilder.stream("transaction",
+        KStream<String, Purchase> purchaseKStream = streamsBuilder.stream("transaction",
                 Consumed.with(stringSerde, purchaseSerde))
                 .mapValues(p -> Purchase.builder(p).maskCreditCard().build());
+
+        KeyValueMapper<String, Purchase, Long> purchaseDateAsKey = (key, purchase) -> purchase.
+                getPurchaseDate().getLong(DAY_OF_MONTH);
+
+        KStream<Long, Purchase> purchaseKFilter = purchaseKStream.filter((k, v) ->
+                v.getPrice().compareTo(new BigDecimal("5.00")) == 1).selectKey(purchaseDateAsKey);
+
+        Predicate<String, Purchase> isCoffee = (key, value) -> value.getDepartment().
+                equalsIgnoreCase("coffee");
+
+        Predicate<String, Purchase> isElectronics = (key, value) -> value.getDepartment().
+                equalsIgnoreCase("electronics");
+
+
+        KStream<String, Purchase>[] kStreamBranch = purchaseKStream.branch(isCoffee, isElectronics);
+
+        kStreamBranch[0].to("coffee", Produced.with(stringSerde, purchaseSerde));
+
+        kStreamBranch[1].to("electronics", Produced.with(stringSerde, purchaseSerde));
 
 
         KStream<String, PurchasePattern> patternKStream = purchaseKStream.mapValues(purchase -> PurchasePattern.
                 builder(purchase).build());
 
         patternKStream.print(Printed.<String, PurchasePattern>toSysOut().withLabel("patterns"));
-        patternKStream.to("patterns", Produced.with(stringSerde,purchasePatternSerde));
+        patternKStream.to("patterns", Produced.with(stringSerde, purchasePatternSerde));
 
 
         KStream<String, RewardAccumulator> rewardsKStream = purchaseKStream.mapValues(purchase -> RewardAccumulator.
                 builder(purchase).build());
 
         rewardsKStream.print(Printed.<String, RewardAccumulator>toSysOut().withLabel("rewards"));
-        rewardsKStream.to("rewards", Produced.with(stringSerde,rewardAccumulatorSerde));
+        rewardsKStream.to("rewards", Produced.with(stringSerde, rewardAccumulatorSerde));
 
 
-
-        purchaseKStream.print(Printed.<String, Purchase>toSysOut().withLabel("purchases"));
-        purchaseKStream.to("purchases", Produced.with(stringSerde,purchaseSerde));
+        purchaseKFilter.print(Printed.<Long, Purchase>toSysOut().withLabel("purchases-renew"));
+        purchaseKFilter.to("purchases-renew", Produced.with(Serdes.Long(), purchaseSerde));
 
 
         // used only to produce data for this application, not typical usage
         MockDataProducer.producePurchaseData();
 
-        KafkaStreams kafkaStreams = new KafkaStreams(streamsBuilder.build(),prop);
+        KafkaStreams kafkaStreams = new KafkaStreams(streamsBuilder.build(), prop);
         log.info("ZMart First Kafka Streams Application Started");
         kafkaStreams.start();
         Thread.sleep(650000);

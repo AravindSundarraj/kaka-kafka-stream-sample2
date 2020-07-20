@@ -22,6 +22,12 @@ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --pa
 
 kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic patterns --config min.insync.replicas=2
 
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic electronics --config min.insync.replicas=2
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic coffee --config min.insync.replicas=2
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic purchases-renew --config min.insync.replicas=2
+
 
 ````
 
