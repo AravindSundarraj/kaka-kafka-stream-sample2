@@ -6,6 +6,7 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.Finance;
 import com.github.javafaker.Name;
 import com.kaka.group.domain.Purchase;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
-
+@Slf4j
 public class DataGenerator {
 
     public static final int NUMBER_UNIQUE_CUSTOMERS = 100;
@@ -255,7 +256,11 @@ public class DataGenerator {
         for (int i = 0; i < numberCustomers; i++) {
             Name name = faker.name();
             String creditCard = creditCards.get(i);
-            String customerId = faker.idNumber().valid();
+            String customerId = Long.toString(faker.number().randomNumber
+                    (6, false));
+
+           // String customerId = faker.number().toString();
+            log.info("faker Customer Id {}" , customerId);
             customers.add(new Customer(name.firstName(), name.lastName(), customerId, creditCard));
         }
         return customers;

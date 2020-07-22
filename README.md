@@ -28,6 +28,12 @@ kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --pa
 
 kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic purchases-renew --config min.insync.replicas=2
 
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic customer_transactions --config min.insync.replicas=2
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic transaction-renew --config min.insync.replicas=2
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 2 --partitions 2 --topic purchases-renew2 --config min.insync.replicas=2
+
 
 ````
 
@@ -63,5 +69,14 @@ kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic transaction
 
 kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic purchases  --from-beginning
 
-purchases
+
+````
+
+# Adding State for Rewards
+````
+overall rewards need to be calculated for each customer.
+state processor is required to call back the previously sent transactions and calculate the 
+rewards with current transaction
+Implement ValueTransformer interface
+
 ````

@@ -5,9 +5,12 @@ A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\seria
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\mock\CustomDateGenerator.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\mock\MockDataProducer.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\mock\Topics.java
+A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\StatefulApp.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\serializer\JsonDeserializer.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\domain\RewardAccumulator.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\serializer\JsonSampleSerializer.java
+A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\transformer\RewardTransformer.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\mock\DataGenerator.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\domain\PurchasePattern.java
 A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\serdes\SampleSerdes.java
+A:\github-workspace\kaka-kafka-stream-sample2\src\main\java\com\kaka\group\partitioner\RewardPartitioner.java

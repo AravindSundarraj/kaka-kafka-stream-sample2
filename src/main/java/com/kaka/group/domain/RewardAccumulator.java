@@ -38,6 +38,7 @@ public class RewardAccumulator {
         this.purchaseTotal = purchaseTotal;
         this.currentRewardPoints = rewardPoints;
         this.totalRewardPoints = rewardPoints;
+
     }
 
     public String getCustomerId() {

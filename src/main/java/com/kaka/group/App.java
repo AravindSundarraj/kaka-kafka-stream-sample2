@@ -4,6 +4,7 @@ import com.kaka.group.domain.Purchase;
 import com.kaka.group.domain.PurchasePattern;
 import com.kaka.group.domain.RewardAccumulator;
 import com.kaka.group.mock.MockDataProducer;
+import com.kaka.group.partitioner.RewardPartitioner;
 import com.kaka.group.serdes.SampleSerdes;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serde;
@@ -30,15 +31,23 @@ public class App {
         prop.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 
         Serde<Purchase> purchaseSerde = SampleSerdes.PurchaseSerde();
+
+        RewardPartitioner rewardPartitioner = new RewardPartitioner();
+
+
+
         Serde<PurchasePattern> purchasePatternSerde = SampleSerdes.PurchasePatternSerde();
         Serde<RewardAccumulator> rewardAccumulatorSerde = SampleSerdes.RewardSerde();
         Serde<String> stringSerde = Serdes.String();
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
 
+
+
         KStream<String, Purchase> purchaseKStream = streamsBuilder.stream("transaction",
                 Consumed.with(stringSerde, purchaseSerde))
                 .mapValues(p -> Purchase.builder(p).maskCreditCard().build());
+
 
         KeyValueMapper<String, Purchase, Long> purchaseDateAsKey = (key, purchase) -> purchase.
                 getPurchaseDate().getLong(DAY_OF_MONTH);
