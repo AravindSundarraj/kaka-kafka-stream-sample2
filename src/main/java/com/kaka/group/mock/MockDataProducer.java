@@ -79,7 +79,7 @@ public class MockDataProducer {
 
     public static void producePurchaseData(int numberPurchases, int numberIterations, int numberCustomers) throws Exception{
         log.info("Produce the mock Data");
-       // Runnable generateTask = () -> {
+        Runnable generateTask = () -> {
             init();
             int counter = 0;
             while (counter++ < numberIterations  && keepRunning) {
@@ -101,8 +101,8 @@ public class MockDataProducer {
             }
             log.info("Done generating purchase data");
 
-      //  };
-       // executorService.submit(generateTask);
+        };
+        executorService.submit(generateTask);
     }
 
 /*

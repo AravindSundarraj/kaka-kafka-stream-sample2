@@ -1,6 +1,7 @@
 package com.kaka.group.serdes;
 
 
+import com.kaka.group.domain.CorrelatedPurchase;
 import com.kaka.group.domain.Purchase;
 import com.kaka.group.domain.PurchasePattern;
 import com.kaka.group.domain.RewardAccumulator;
@@ -20,6 +21,18 @@ public class SampleSerdes {
     public static Serde<RewardAccumulator> RewardAccumulatorSerde() {
         return new RewardAccumulatorSerde();
     }*/
+
+
+    public static Serde<CorrelatedPurchase> correlatedPurchaseSerde() {
+        return new CorrelatedPurchaseSerde();
+    }
+
+
+    public static final class CorrelatedPurchaseSerde extends Serdes.WrapperSerde<CorrelatedPurchase> {
+        public CorrelatedPurchaseSerde() {
+            super(new JsonSampleSerializer<CorrelatedPurchase>(), new JsonSampleDeSerializer<CorrelatedPurchase>(CorrelatedPurchase.class));
+        }
+    }
 
     public static Serde<Purchase> PurchaseSerde() {
         return new PurchaseSerde();

@@ -22,6 +22,8 @@ import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.StoreBuilder;
 import org.apache.kafka.streams.state.Stores;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @Slf4j
@@ -56,8 +58,19 @@ public class StatefulApp {
         String rewardsStateStoreName = "rewardsPointsStore";
         RewardPartitioner streamPartitioner = new RewardPartitioner();
 
-        KeyValueBytesStoreSupplier storeSupplier = Stores.inMemoryKeyValueStore(rewardsStateStoreName);
-        StoreBuilder<KeyValueStore<String, Integer>> storeBuilder = Stores.keyValueStoreBuilder(storeSupplier, Serdes.String(), Serdes.Integer());
+        KeyValueBytesStoreSupplier storeSupplier =
+                Stores.inMemoryKeyValueStore(rewardsStateStoreName);
+        StoreBuilder<KeyValueStore<String, Integer>> storeBuilder =
+                Stores.keyValueStoreBuilder(storeSupplier, Serdes.String(), Serdes.Integer());
+
+        Map<String, String> changeLogConfigs = new HashMap<>();
+        changeLogConfigs.put("retention.ms","172800000" );
+        changeLogConfigs.put("retention.bytes", "10000000000");
+        changeLogConfigs.put("cleanup.policy", "compact,delete");
+
+        storeBuilder.withLoggingEnabled(changeLogConfigs);
+
+       log.info("Log Config Change-log {} " , storeBuilder.logConfig()) ;
 
         streamsBuilder.addStateStore(storeBuilder);
 

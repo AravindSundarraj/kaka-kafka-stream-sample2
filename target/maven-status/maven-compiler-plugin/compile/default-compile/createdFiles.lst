@@ -1,11 +1,15 @@
+com\kaka\group\joiner\PurchaseJoiner.class
 com\kaka\group\mock\Topics$4.class
 com\kaka\group\App.class
 com\kaka\group\mock\DataGenerator$Store.class
 com\kaka\group\serdes\SampleSerdes$RewardSerde.class
 com\kaka\group\domain\RewardAccumulator$1.class
 com\kaka\group\partitioner\RewardPartitioner.class
+com\kaka\group\serdes\SampleSerdes$CorrelatedPurchaseSerde.class
 com\kaka\group\mock\DataGenerator$1.class
 com\kaka\group\mock\Topics$2.class
+com\kaka\group\StateJoinApp.class
+com\kaka\group\domain\CorrelatedPurchase$Builder.class
 com\kaka\group\serializer\JsonSampleDeSerializer.class
 com\kaka\group\domain\Purchase$PurchaseBuilder.class
 com\kaka\group\mock\DataGenerator$Customer.class
@@ -22,9 +26,11 @@ com\kaka\group\domain\PurchasePattern$Builder.class
 com\kaka\group\mock\Topics.class
 com\kaka\group\mock\MockDataProducer.class
 com\kaka\group\mock\Topics$1.class
+com\kaka\group\domain\CorrelatedPurchase.class
 com\kaka\group\mock\DataGenerator.class
 com\kaka\group\serdes\SampleSerdes.class
 com\kaka\group\serializer\JsonSampleSerializer.class
+com\kaka\group\domain\CorrelatedPurchase$1.class
 com\kaka\group\mock\CustomDateGenerator.class
 com\kaka\group\domain\Purchase$1.class
 com\kaka\group\domain\Purchase.class
